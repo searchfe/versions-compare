@@ -28,3 +28,35 @@ compare('1.1.', [1, 2, 3]); // Wrong Params.
 compare('.1.1', [1, 2, 3]); // Wrong Params.
 
 ```
+
+## UMD 版本引入
+### Rollup
+
+```javascript
+import path from 'path';
+
+export default {
+    //...
+    plugins: [{
+        resolveId(id) {
+            if (id.startsWith('versions-compare')) {
+                return path.resolve(`${yourPath}/versions-compare/src/index.umd.js`);
+            }
+            return null;
+        }
+    }],
+    //...
+}
+```
+
+### Webpack
+```javascript
+module.exports = {
+    //...
+    resolve: {
+        alias: {
+            "versions-compare": "versions-compare/src/index.umd.js"
+        }
+    }
+};
+```

@@ -1,11 +1,23 @@
 /**
  * @file index.js 工具文件
  *
- * @author  pearl
  * @date 2018-08-07
  */
 
-define(function (require) {
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        module.exports = factory();
+    } else {
+        // Browser globals (root is window)
+        root.myModule = factory();
+    }
+}(typeof self !== 'undefined' ? self : this, function () {
     /**
      * [compare 比较两个整数的大小]
      *
@@ -14,7 +26,7 @@ define(function (require) {
      *
      * @return {integer} 1: a > b; 0: a === b; -1: a < b
      */
-    function compare (a, b) {
+    function compare(a, b) {
         if (a > b) {
             return 1;
         }
@@ -33,7 +45,7 @@ define(function (require) {
      *
      * @return {integer} 1: a > b; 0: a === b; -1: a < b
      */
-    function arrayCompare (a, b, isReverse) {
+    function arrayCompare(a, b, isReverse) {
         // 有些函数返回的版本号是逆序的，此时 isReverse 传 true 即可
         if (isReverse) {
             a = a.reverse();
@@ -95,8 +107,7 @@ define(function (require) {
      * @param  {Number/Array/String} version 版本号
      * @return {Array}               转换为数组后的版本号
      */
-    function dataPreprocess (version) {
-
+    function dataPreprocess(version) {
         if (util.isNumber(version)) {
             version = version.toString();
         }
@@ -120,7 +131,7 @@ define(function (require) {
      *
      * @return {integer} 1: a > b; 0: a === b; -1: a < b
      */
-    return function main (a, b, isReverse) {
+    function main(a, b, isReverse) {
         a = dataPreprocess(a);
         b = dataPreprocess(b);
 
@@ -129,5 +140,7 @@ define(function (require) {
         }
 
         return 'Wrong Params.';
-    };
-});
+    }
+
+    return main;
+}));
