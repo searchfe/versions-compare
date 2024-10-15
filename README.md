@@ -39,8 +39,8 @@ export default {
     //...
     plugins: [{
         resolveId(id) {
-            if (id.startsWith('versions-compare')) {
-                return path.resolve(`${yourPath}/versions-compare/src/index.umd.js`);
+            if (id.startsWith('@searchfe/versions-compare')) {
+                return path.resolve(`${yourPath}/@searchfe/versions-compare/src/index.umd.js`);
             }
             return null;
         }
